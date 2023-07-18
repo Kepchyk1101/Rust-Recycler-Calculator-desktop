@@ -275,23 +275,6 @@ public class GUI extends Application {
     }
 
     private static void VeryVeryBadCode() {
-        int amount1 = 0;
-        int amount2 = 0;
-        int amount3 = 0;
-        int amount4 = 0;
-        int amount5 = 0;
-        int amount6 = 0;
-        int amount7 = 0;
-        int amount8 = 0;
-        int amount9 = 0;
-        int amount10 = 0;
-        int amount11 = 0;
-        int amount12 = 0;
-        int amount13 = 0;
-        int amount14 = 0;
-        int amount15 = 0;
-        int amount16 = 0;
-        int amount17 = 0;
         int fistLineBTN_Y = 77;
         int secondLineBTN_Y = 153;
         int thirdLineBTN_Y = 231;
@@ -315,23 +298,23 @@ public class GUI extends Application {
         Button button15 = setButtonProperties(null, null, null, 72, 69, 177, thirdLineBTN_Y, true);
         Button button16 = setButtonProperties(null, null, null, 72, 69, 256, thirdLineBTN_Y, true);
         Button button17 = setButtonProperties(null, null, null, 72, 69, 335, thirdLineBTN_Y, true);
-        Text text1 = setTextProperties("x" + amount1, Font.font(fontName, 14.5), Color.WHITESMOKE, 21, fistLineTXT_Y);
-        Text text2 = setTextProperties("x" + amount2, Font.font(fontName, 14.5), Color.WHITESMOKE, 100, fistLineTXT_Y);
-        Text text3 = setTextProperties("x" + amount3, Font.font(fontName, 14.5), Color.WHITESMOKE, 179, fistLineTXT_Y);
-        Text text4 = setTextProperties("x" + amount4, Font.font(fontName, 14.5), Color.WHITESMOKE, 258, fistLineTXT_Y);
-        Text text5 = setTextProperties("x" + amount5, Font.font(fontName, 14.5), Color.WHITESMOKE, 337, fistLineTXT_Y);
-        Text text6 = setTextProperties("x" + amount6, Font.font(fontName, 14.5), Color.WHITESMOKE, 416, fistLineTXT_Y);
-        Text text7 = setTextProperties("x" + amount7, Font.font(fontName, 14.5), Color.WHITESMOKE, 21, secondLineTXT_Y);
-        Text text8 = setTextProperties("x" + amount8, Font.font(fontName, 14.5), Color.WHITESMOKE, 100, secondLineTXT_Y);
-        Text text9 = setTextProperties("x" + amount9, Font.font(fontName, 14.5), Color.WHITESMOKE, 179, secondLineTXT_Y);
-        Text text10 = setTextProperties("x" + amount10, Font.font(fontName, 14.5), Color.WHITESMOKE, 258, secondLineTXT_Y);
-        Text text11 = setTextProperties("x" + amount11, Font.font(fontName, 14.5), Color.WHITESMOKE, 337, secondLineTXT_Y);
-        Text text12 = setTextProperties("x" + amount12, Font.font(fontName, 14.5), Color.WHITESMOKE, 416, secondLineTXT_Y);
-        Text text13 = setTextProperties("x" + amount13, Font.font(fontName, 14.5), Color.WHITESMOKE, 21, thirdLineTXT_Y);
-        Text text14 = setTextProperties("x" + amount14, Font.font(fontName, 14.5), Color.WHITESMOKE, 100, thirdLineTXT_Y);
-        Text text15 = setTextProperties("x" + amount15, Font.font(fontName, 14.5), Color.WHITESMOKE, 179, thirdLineTXT_Y);
-        Text text16 = setTextProperties("x" + amount16, Font.font(fontName, 14.5), Color.WHITESMOKE, 258, thirdLineTXT_Y);
-        Text text17 = setTextProperties("x" + amount17, Font.font(fontName, 14.5), Color.WHITESMOKE, 337, thirdLineTXT_Y);
+        Text text1 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 21, fistLineTXT_Y);
+        Text text2 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 100, fistLineTXT_Y);
+        Text text3 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 179, fistLineTXT_Y);
+        Text text4 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 258, fistLineTXT_Y);
+        Text text5 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 337, fistLineTXT_Y);
+        Text text6 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 416, fistLineTXT_Y);
+        Text text7 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 21, secondLineTXT_Y);
+        Text text8 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 100, secondLineTXT_Y);
+        Text text9 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 179, secondLineTXT_Y);
+        Text text10 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 258, secondLineTXT_Y);
+        Text text11 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 337, secondLineTXT_Y);
+        Text text12 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 416, secondLineTXT_Y);
+        Text text13 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 21, thirdLineTXT_Y);
+        Text text14 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 100, thirdLineTXT_Y);
+        Text text15 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 179, thirdLineTXT_Y);
+        Text text16 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 258, thirdLineTXT_Y);
+        Text text17 = setTextProperties("x0", Font.font(fontName, 14.5), Color.WHITESMOKE, 337, thirdLineTXT_Y);
 
         texts_components.add(text1);
         texts_components.add(text2);
