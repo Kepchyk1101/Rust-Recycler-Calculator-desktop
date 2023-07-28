@@ -4,7 +4,7 @@ import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.Objects.Componen
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.Objects.ComponentPrice;
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.Objects.Result;
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustItems.Components;
-import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustItems.Resoruces;
+import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustItems.Resources;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class RustRecyclerCalculator {
 
             ComponentPrice[] componentPrice = componentArray.getComponent().getComponentPrice();
             for (ComponentPrice componentPr1ce : componentPrice) {    // Проходимся по "цене" предмета, который "перерабатываем"
-                Resoruces resultResource = componentPr1ce.getResoruce();
+                Resources resultResource = componentPr1ce.getResource();
                 int resultResourceAmount = componentPr1ce.getAmount() * componentArray.getAmount();
 
                 if (isFullrecycle) {    // Если включена функция переработки побочных компонентов по типу: веревки, микросхемы.. - следующие проверки
@@ -41,37 +41,37 @@ public class RustRecyclerCalculator {
 
     }
 
-    private static boolean isResultHaveResource(Resoruces resoruce, ArrayList<Result> result) {    // Проверка: есть ли в рез. массиве конкретный элемент resoruce?
+    private static boolean isResultHaveResource(Resources resource, ArrayList<Result> result) {    // Проверка: есть ли в рез. массиве конкретный элемент resources?
         for (Result result_ : result) {
-            if (result_.getResoruce().equals(resoruce)) {
+            if (result_.getResource().equals(resource)) {
                 return true;
             }
         }
         return false;
     }
 
-    private static int getResourceIndex(Resoruces resoruce, ArrayList<Result> result) {    // Возвращает индекс конкретного элемента resource из рез. массива..
+    private static int getResourceIndex(Resources resource, ArrayList<Result> result) {    // Возвращает индекс конкретного элемента resource из рез. массива..
         // ..(запускается только после проверки isResultHaveResource)
         for (int i = 0; i < result.size(); i++) {
-            if (result.get(i).getResoruce().equals(resoruce)) {
+            if (result.get(i).getResource().equals(resource)) {
                 return i;
             }
         }
         return Integer.parseInt(null);
     }
 
-    private static void addResultToArray(Resoruces resoruce, int amount, ComponentPrice[] componentPrice, ArrayList<Result> result) {
+    private static void addResultToArray(Resources resource, int amount, ComponentPrice[] componentPrice, ArrayList<Result> result) {
 
         if (componentPrice.length > 0) {    // Если в рез. массиве уже есть хотя-бы 1 элемент - переходим дальше
-            if (isResultHaveResource(resoruce, result)) {    // Если в рез. массиве уже есть ресурс который мы хотим добавить ..
+            if (isResultHaveResource(resource, result)) {    // Если в рез. массиве уже есть ресурс который мы хотим добавить ..
                 // ..достаём его и меняем значение (amount/количество)
-                int index = getResourceIndex(resoruce, result);
+                int index = getResourceIndex(resource, result);
                 result.get(index).setAmount(result.get(index).getAmount() + amount);
             } else {    // Если же нет - добавляем новый элемент в рез. массив
-                result.add(new Result(resoruce, amount));
+                result.add(new Result(resource, amount));
             }
         } else {    // Если же нет - добавляем первый элемент в рез. массив
-            result.add(new Result(resoruce, amount));
+            result.add(new Result(resource, amount));
         }
 
     }
@@ -80,7 +80,7 @@ public class RustRecyclerCalculator {
 
         ComponentPrice[] componentPrices = component.getComponentPrice();
         for (ComponentPrice componentPrice : componentPrices) {
-            Resoruces resource = componentPrice.getResoruce();
+            Resources resource = componentPrice.getResource();
             int amountOfResource = componentPrice.getAmount() * resultResourceAmount;
             addResultToArray(resource, amountOfResource, componentPrices, result);
         }

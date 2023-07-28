@@ -3,7 +3,7 @@ package com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustItems;
 import com.kepchyk1101.rustrecyclercalculatordesktop.utils.utils;
 import javafx.scene.image.Image;
 
-public enum Resoruces {
+public enum Resources {
 
     Scrap("Металлолом", utils.getImageFromResources("scrap.png")),
     Metal_Fragments("Фрагменты металла", utils.getImageFromResources("metal.fragments.png")),
@@ -15,13 +15,9 @@ public enum Resoruces {
     private String ru_name;
     private Image image;
 
-    Resoruces(String ru_name, Image image) {
+    Resources(String ru_name, Image image) {
         this.ru_name = ru_name;
         this.image = image;
-    }
-
-    public String getRu_name() {
-        return ru_name;
     }
 
     public Image getImage() {

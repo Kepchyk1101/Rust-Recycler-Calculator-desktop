@@ -3,7 +3,7 @@ package com.kepchyk1101.rustrecyclercalculatordesktop.gui;
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.Objects.ComponentArray;
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.Objects.Result;
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustItems.Components;
-import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustItems.Resoruces;
+import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustItems.Resources;
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustRecyclerCalculator;
 import com.kepchyk1101.rustrecyclercalculatordesktop.utils.utils;
 import javafx.application.Application;
@@ -70,8 +70,8 @@ public class GUI extends Application {
         }
 
         icon_X = -35;
-        for (Resoruces resoruce : Resoruces.values()) {
-            globalPane.getChildren().add(addImage(resoruce.getImage(), icon_X, 295));
+        for (Resources resources : Resources.values()) {
+            globalPane.getChildren().add(addImage(resources.getImage(), icon_X, 295));
             icon_X += 79;
         }
 
@@ -263,7 +263,7 @@ public class GUI extends Application {
         reset_resources_event();
 
         for (Result res : result) {
-            switch (res.getResoruce()) {
+            switch (res.getResource()) {
                 case Scrap -> setComponentAmount_txt(scrap_txt, res.getAmount());
                 case Metal_Fragments -> setComponentAmount_txt(metal_txt, res.getAmount());
                 case High_Quality_Metal -> setComponentAmount_txt(HQM_txt, res.getAmount());
