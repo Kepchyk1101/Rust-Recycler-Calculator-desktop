@@ -1,10 +1,10 @@
-package com.kepchyk1101.rustrecyclercalculatordesktop.calculator.Objects;
+package com.kepchyk1101.rustrecyclercalculatordesktop.calculator.object;
 
-import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustItems.Components;
+import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.rustitem.Components;
 
 public class ComponentArray {
 
-    private Components component;
+    private final Components component;
     private int amount;
 
     public ComponentArray(Components component, int amount) {

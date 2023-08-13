@@ -1,47 +1,55 @@
 package com.kepchyk1101.rustrecyclercalculatordesktop.calculator;
 
-import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.Objects.ComponentArray;
-import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.Objects.ComponentPrice;
-import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.Objects.Result;
-import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustItems.Components;
-import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustItems.Resources;
+import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.object.ComponentArray;
+import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.object.ComponentPrice;
+import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.object.Result;
+import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.rustitem.Components;
+import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.rustitem.Resources;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RustRecyclerCalculator {
 
-    public static ArrayList<Result> Calculate(ComponentArray[] componentsArray, boolean isFullrecycle) {
+    private final ArrayList<Result> result = new ArrayList<>();
+    private final Map<Resources, Result> resultMap = new HashMap<>(); // todo
 
-        ArrayList<Result> result = new ArrayList<>();
-        // "рез. масив" - Результативный массив (финальная версия того, что должно получится из "переработки")
+    public ArrayList<Result> calculate(ComponentArray[] componentsArray, boolean isNeedFullRecycle) {
 
-        for (ComponentArray componentArray : componentsArray) {    // Проходимся по всему, что нужно "переработать"
+        // Проходимся по всему, что нужно "переработать"
+        for (ComponentArray componentArray : componentsArray) {
 
             ComponentPrice[] componentPrice = componentArray.getComponent().getComponentPrice();
-            for (ComponentPrice componentPr1ce : componentPrice) {    // Проходимся по "цене" предмета, который "перерабатываем"
+
+            // Проходимся по "цене" предмета, который "перерабатываем"
+            for (ComponentPrice componentPr1ce : componentPrice) {
                 Resources resultResource = componentPr1ce.getResource();
                 int resultResourceAmount = componentPr1ce.getAmount() * componentArray.getAmount();
 
-                if (isFullrecycle) {    // Если включена функция переработки побочных компонентов по типу: веревки, микросхемы.. - следующие проверки
+                // Если включена функция переработки побочных компонентов по типу: веревки, микросхемы.. - следующие проверки
+                if (isNeedFullRecycle) {
 
                     switch (resultResource) {
-                        case Tech_Trash -> addResultOfLeftoversToArray(Components.Tech_Trash, resultResourceAmount, result);
-                        case Rope -> addResultOfLeftoversToArray(Components.Rope, resultResourceAmount, result);
-                        default -> addResultToArray(resultResource, resultResourceAmount, componentPrice, result);
+                        case TECH_TRASH -> addResultOfLeftoversToArray(Components.TECH_TRASH, resultResourceAmount);
+                        case ROPE -> addResultOfLeftoversToArray(Components.ROPE, resultResourceAmount);
+                        default -> addResultToArray(resultResource, resultResourceAmount, componentPrice);
                     }
 
-                } else    // Если нет - просто добавляем обьект в рез. массив
-                    addResultToArray(resultResource, resultResourceAmount, componentPrice, result);
+                    // Если нет - просто добавляем обьект в рез. массив
+                } else
+                    addResultToArray(resultResource, resultResourceAmount, componentPrice);
 
             }
 
         }
 
-        return result;    // Выводим результат
+        return result;
 
     }
 
-    private static boolean isResultHaveResource(Resources resource, ArrayList<Result> result) {    // Проверка: есть ли в рез. массиве конкретный элемент resources?
+    // Проверка: есть ли в рез. массиве конкретный элемент resources?
+    private boolean isResultHaveResource(Resources resource) {
         for (Result result_ : result) {
             if (result_.getResource().equals(resource)) {
                 return true;
@@ -50,8 +58,11 @@ public class RustRecyclerCalculator {
         return false;
     }
 
-    private static int getResourceIndex(Resources resource, ArrayList<Result> result) {    // Возвращает индекс конкретного элемента resource из рез. массива..
-        // ..(запускается только после проверки isResultHaveResource)
+    /*
+        Возвращает индекс конкретного элемента resource из рез. массива..
+        (запускается только после проверки isResultHaveResource)
+     */
+    private int getResourceIndex(Resources resource) {
         for (int i = 0; i < result.size(); i++) {
             if (result.get(i).getResource().equals(resource)) {
                 return i;
@@ -60,29 +71,38 @@ public class RustRecyclerCalculator {
         return Integer.parseInt(null);
     }
 
-    private static void addResultToArray(Resources resource, int amount, ComponentPrice[] componentPrice, ArrayList<Result> result) {
+    private void addResultToArray(Resources resource, int amount, ComponentPrice[] componentPrice) {
 
-        if (componentPrice.length > 0) {    // Если в рез. массиве уже есть хотя-бы 1 элемент - переходим дальше
-            if (isResultHaveResource(resource, result)) {    // Если в рез. массиве уже есть ресурс который мы хотим добавить ..
-                // ..достаём его и меняем значение (amount/количество)
-                int index = getResourceIndex(resource, result);
+        // Если в рез. массиве уже есть хотя-бы 1 элемент - переходим дальше
+        if (componentPrice.length > 0) {
+
+            /*
+                Если в рез. массиве уже есть ресурс который мы хотим добавить
+                достаём его и меняем значение (amount/количество)
+             */
+            if (isResultHaveResource(resource)) {
+                int index = getResourceIndex(resource);
                 result.get(index).setAmount(result.get(index).getAmount() + amount);
-            } else {    // Если же нет - добавляем новый элемент в рез. массив
+
+                // Если же нет - добавляем новый элемент в рез. массив
+            } else {
                 result.add(new Result(resource, amount));
             }
-        } else {    // Если же нет - добавляем первый элемент в рез. массив
+
+            // Если же нет - добавляем первый элемент в рез. массив
+        } else {
             result.add(new Result(resource, amount));
         }
 
     }
 
-    private static void addResultOfLeftoversToArray(Components component, int resultResourceAmount, ArrayList<Result> result) {
+    private void addResultOfLeftoversToArray(Components component, int resultResourceAmount) {
 
         ComponentPrice[] componentPrices = component.getComponentPrice();
         for (ComponentPrice componentPrice : componentPrices) {
             Resources resource = componentPrice.getResource();
             int amountOfResource = componentPrice.getAmount() * resultResourceAmount;
-            addResultToArray(resource, amountOfResource, componentPrices, result);
+            addResultToArray(resource, amountOfResource, componentPrices);
         }
 
     }
