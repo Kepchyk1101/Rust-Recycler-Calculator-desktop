@@ -11,11 +11,11 @@ public class utils {
         return new Image(Objects.requireNonNull(GUI.class.getResourceAsStream("/icons/" + iconName)));
     }
 
-    public static boolean isDigit(String str) {
+    public static boolean isNumeric(String str) {
         try {
             Integer.parseInt(str);
             return true;
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }

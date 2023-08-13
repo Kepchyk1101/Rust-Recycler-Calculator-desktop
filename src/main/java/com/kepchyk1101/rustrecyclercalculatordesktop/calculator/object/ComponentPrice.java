@@ -5,7 +5,7 @@ import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.rustitem.Resourc
 public class ComponentPrice {
 
     private final Resources resource;
-    private int amount;
+    private final int amount;
 
     public ComponentPrice(Resources resource, int amount) {
         this.resource = resource;

@@ -5,7 +5,7 @@ import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.rustitem.Compone
 public class ComponentArray {
 
     private final Components component;
-    private int amount;
+    private final int amount;
 
     public ComponentArray(Components component, int amount) {
         this.component = component;
