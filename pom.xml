@@ -6,7 +6,7 @@
 
     <groupId>com.kepchyk1101</groupId>
     <artifactId>RustRecyclerCalculator-desktop</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>RustRecyclerCalculator-desktop</name>
     <packaging>jar</packaging>
 

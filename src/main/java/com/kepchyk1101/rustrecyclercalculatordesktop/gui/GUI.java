@@ -1,37 +1,35 @@
 package com.kepchyk1101.rustrecyclercalculatordesktop.gui;
 
+import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustRecyclerCalculator;
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.object.ComponentArray;
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.object.Result;
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.rustitem.Components;
 import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.rustitem.Resources;
-import com.kepchyk1101.rustrecyclercalculatordesktop.calculator.RustRecyclerCalculator;
 import com.kepchyk1101.rustrecyclercalculatordesktop.utils.utils;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 public class GUI extends Application {
 
-    private static final String PROJECT_NAME = "Rust Recycler Calculator | v1.0.1 | by Kepchyk1101";
-    private static final String FONT = "Franklin Gothic Medium";
-
+    private static final String PROJECT_NAME = "Rust Recycler Calculator | v1.0.2 | by Kepchyk1101";
+    private static final String FONT_NAME = "Franklin Gothic Medium";
     private static final double IMAGE_SCALE = 0.35;
 
-    private static final ArrayList<Text> textComponents = new ArrayList<>();
-    private static final ArrayList<Text> textResources = new ArrayList<>();
+    private static ArrayList<Text> textComponents;
+    private static ArrayList<Text> textResources;
 
     private static Text scrapText, metalText, highQualityMetalText, clothText, ropeText, techPartsText;
 
@@ -111,7 +109,9 @@ public class GUI extends Application {
                     openAlertDialog(Alert.AlertType.ERROR, "Число не может быть более 99,999 или меньше 0 !", "Ошибка");
             } else
                 openAlertDialog(Alert.AlertType.ERROR, "Введённый текст не является числом/цифрой !", "Ошибка");
-        } catch (NoSuchElementException ignored) {}
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
     }
 
     private void openAlertDialog(Alert.AlertType alertType, String content, String header) {
@@ -122,25 +122,24 @@ public class GUI extends Application {
         alert.show();
     }
 
-    private ImageView addImage(String path, double X, double Y) {
-        Image image = utils.getImageFromResources(path);
-        ImageView imagev = new ImageView(image);
-        imagev.setScaleX(IMAGE_SCALE);
-        imagev.setScaleY(IMAGE_SCALE);
-        imagev.setScaleZ(IMAGE_SCALE);
-        imagev.setX(X);
-        imagev.setY(Y);
-        return imagev;
+    private ImageView addImage(String pathToImage, double X, double Y) {
+        ImageView imageView = new ImageView(utils.getImageFromResources(pathToImage));
+        imageView.setScaleX(IMAGE_SCALE);
+        imageView.setScaleY(IMAGE_SCALE);
+        imageView.setScaleZ(IMAGE_SCALE);
+        imageView.setX(X);
+        imageView.setY(Y);
+        return imageView;
     }
 
     private ImageView addImage(Image image, double X, double Y) {
-        ImageView imagev = new ImageView(image);
-        imagev.setScaleX(IMAGE_SCALE);
-        imagev.setScaleY(IMAGE_SCALE);
-        imagev.setScaleZ(IMAGE_SCALE);
-        imagev.setX(X);
-        imagev.setY(Y);
-        return imagev;
+        ImageView imageView = new ImageView(image);
+        imageView.setScaleX(IMAGE_SCALE);
+        imageView.setScaleY(IMAGE_SCALE);
+        imageView.setScaleZ(IMAGE_SCALE);
+        imageView.setX(X);
+        imageView.setY(Y);
+        return imageView;
     }
 
     private void setComponentAmountText(Text text, int newAmount) {
@@ -149,30 +148,29 @@ public class GUI extends Application {
 
     private void preload() {
 
-        InputStream inputStream = GUI.class.getResourceAsStream("/fonts/Rust.ttf");
         output5BlockIcon = addImage("block.png", 281, 295);
         output6BlockIcon = addImage("block.png", 360, 295);
 
-        paneBackground = setBackgroundProperties("background.png");
+        paneBackground = setBackgroundProperties(utils.getImageFromResources("background.png"));
 
 
         logoText = setTextProperties("Rust Recycler Calculator",
-                Font.loadFont(inputStream, 17), Color.WHITE, 120, 30);
-        inputText = setTextProperties("вход", Font.font(FONT, 16),
+                Font.loadFont(GUI.class.getResourceAsStream("/fonts/Rust.ttf"), 17), Color.WHITE, 120, 30);
+        inputText = setTextProperties("вход", Font.font(FONT_NAME, 16),
                 Color.web("#bdb4ac"), 20, 58);
-        outputText = setTextProperties("выход", Font.font(FONT, 16),
+        outputText = setTextProperties("выход", Font.font(FONT_NAME, 16),
                 Color.web("#bdb4ac"), 20, 330);
-        controlText = setTextProperties("управление", Font.font(FONT, 16),
+        controlText = setTextProperties("управление", Font.font(FONT_NAME, 16),
                 Color.web("#bdb4ac"), 20, 453);
         warningText = setTextProperties("Для того, чтобы изменить количество предмета - нажмите на его иконку !",
-                Font.font(FONT, 13), Color.ORANGERED, 20, 589);
+                Font.font(FONT_NAME, 13), Color.YELLOW, 20, 589);
 
 
-        calculateButton = setButtonProperties("Посчитать", Font.font(FONT, 20),
+        calculateButton = setButtonProperties("Посчитать", Font.font(FONT_NAME, 20),
                 Color.web("#9bb46e"), 221, 67, 22, 475, true);
         calculateButton.setOnAction(event -> calculateEvent());
 
-        resetButton = setButtonProperties("Сбросить", Font.font(FONT, 20),
+        resetButton = setButtonProperties("Сбросить", Font.font(FONT_NAME, 20),
                 Color.web("#9bb46e"), 221, 67, 262, 475, true);
         resetButton.setOnAction(event -> {
             resetComponentsEvent();
@@ -180,7 +178,7 @@ public class GUI extends Application {
         });
 
 
-        isFullRecycleCheckBox = setCheckBoxProperties("Включить полную переработку?", Font.font(FONT, 13),
+        isFullRecycleCheckBox = setCheckBoxProperties("Включить полную переработку?", Font.font(FONT_NAME, 13),
                 Color.web("#bdb4ac"), 20, 550);
         isFullRecycleCheckBox.setOnAction(actionEvent -> {
             if (isFullRecycleCheckBox.isSelected())
@@ -191,8 +189,7 @@ public class GUI extends Application {
 
     }
 
-    private Background setBackgroundProperties(String iconName) {
-        Image image = utils.getImageFromResources(iconName);
+    private Background setBackgroundProperties(Image image) {
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         return new Background(backgroundImage);
@@ -278,64 +275,49 @@ public class GUI extends Application {
     }
 
     private void veryVeryBadCode() {
-        int fistLineBTN_Y = 77;
-        int secondLineBTN_Y = 153;
-        int thirdLineBTN_Y = 231;
-        int fistLineTXT_Y = 143;
-        int secondLineTXT_Y = 219;
-        int thirdLineTXT_Y = 299;
-        Button button1 = setButtonProperties(null, null, null, 72, 69, 19, fistLineBTN_Y, true);
-        Button button2 = setButtonProperties(null, null, null, 72, 69, 98, fistLineBTN_Y, true);
-        Button button3 = setButtonProperties(null, null, null, 72, 69, 177, fistLineBTN_Y, true);
-        Button button4 = setButtonProperties(null, null, null, 72, 69, 256, fistLineBTN_Y, true);
-        Button button5 = setButtonProperties(null, null, null, 72, 69, 335, fistLineBTN_Y, true);
-        Button button6 = setButtonProperties(null, null, null, 72, 69, 414, fistLineBTN_Y, true);
-        Button button7 = setButtonProperties(null, null, null, 72, 69, 19, secondLineBTN_Y, true);
-        Button button8 = setButtonProperties(null, null, null, 72, 69, 98, secondLineBTN_Y, true);
-        Button button9 = setButtonProperties(null, null, null, 72, 69, 177, secondLineBTN_Y, true);
-        Button button10 = setButtonProperties(null, null, null, 72, 69, 256, secondLineBTN_Y, true);
-        Button button11 = setButtonProperties(null, null, null, 72, 69, 335, secondLineBTN_Y, true);
-        Button button12 = setButtonProperties(null, null, null, 72, 69, 414, secondLineBTN_Y, true);
-        Button button13 = setButtonProperties(null, null, null, 72, 69, 19, thirdLineBTN_Y, true);
-        Button button14 = setButtonProperties(null, null, null, 72, 69, 98, thirdLineBTN_Y, true);
-        Button button15 = setButtonProperties(null, null, null, 72, 69, 177, thirdLineBTN_Y, true);
-        Button button16 = setButtonProperties(null, null, null, 72, 69, 256, thirdLineBTN_Y, true);
-        Button button17 = setButtonProperties(null, null, null, 72, 69, 335, thirdLineBTN_Y, true);
-        Text text1 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 21, fistLineTXT_Y);
-        Text text2 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 100, fistLineTXT_Y);
-        Text text3 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 179, fistLineTXT_Y);
-        Text text4 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 258, fistLineTXT_Y);
-        Text text5 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 337, fistLineTXT_Y);
-        Text text6 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 416, fistLineTXT_Y);
-        Text text7 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 21, secondLineTXT_Y);
-        Text text8 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 100, secondLineTXT_Y);
-        Text text9 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 179, secondLineTXT_Y);
-        Text text10 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 258, secondLineTXT_Y);
-        Text text11 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 337, secondLineTXT_Y);
-        Text text12 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 416, secondLineTXT_Y);
-        Text text13 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 21, thirdLineTXT_Y);
-        Text text14 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 100, thirdLineTXT_Y);
-        Text text15 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 179, thirdLineTXT_Y);
-        Text text16 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 258, thirdLineTXT_Y);
-        Text text17 = setTextProperties("x0", Font.font(FONT, 14.5), Color.WHITESMOKE, 337, thirdLineTXT_Y);
+        int fistLineButtonY = 77;
+        int secondLineButtonY = 153;
+        int thirdLineButtonY = 231;
+        int fistLineTextY = 143;
+        int secondLineTextY = 219;
+        int thirdLineTextY = 299;
+        Button button1 = setButtonProperties(null, null, null, 72, 69, 19, fistLineButtonY, true);
+        Button button2 = setButtonProperties(null, null, null, 72, 69, 98, fistLineButtonY, true);
+        Button button3 = setButtonProperties(null, null, null, 72, 69, 177, fistLineButtonY, true);
+        Button button4 = setButtonProperties(null, null, null, 72, 69, 256, fistLineButtonY, true);
+        Button button5 = setButtonProperties(null, null, null, 72, 69, 335, fistLineButtonY, true);
+        Button button6 = setButtonProperties(null, null, null, 72, 69, 414, fistLineButtonY, true);
+        Button button7 = setButtonProperties(null, null, null, 72, 69, 19, secondLineButtonY, true);
+        Button button8 = setButtonProperties(null, null, null, 72, 69, 98, secondLineButtonY, true);
+        Button button9 = setButtonProperties(null, null, null, 72, 69, 177, secondLineButtonY, true);
+        Button button10 = setButtonProperties(null, null, null, 72, 69, 256, secondLineButtonY, true);
+        Button button11 = setButtonProperties(null, null, null, 72, 69, 335, secondLineButtonY, true);
+        Button button12 = setButtonProperties(null, null, null, 72, 69, 414, secondLineButtonY, true);
+        Button button13 = setButtonProperties(null, null, null, 72, 69, 19, thirdLineButtonY, true);
+        Button button14 = setButtonProperties(null, null, null, 72, 69, 98, thirdLineButtonY, true);
+        Button button15 = setButtonProperties(null, null, null, 72, 69, 177, thirdLineButtonY, true);
+        Button button16 = setButtonProperties(null, null, null, 72, 69, 256, thirdLineButtonY, true);
+        Button button17 = setButtonProperties(null, null, null, 72, 69, 335, thirdLineButtonY, true);
+        Text text1 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 21, fistLineTextY);
+        Text text2 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 100, fistLineTextY);
+        Text text3 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 179, fistLineTextY);
+        Text text4 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 258, fistLineTextY);
+        Text text5 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 337, fistLineTextY);
+        Text text6 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 416, fistLineTextY);
+        Text text7 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 21, secondLineTextY);
+        Text text8 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 100, secondLineTextY);
+        Text text9 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 179, secondLineTextY);
+        Text text10 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 258, secondLineTextY);
+        Text text11 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 337, secondLineTextY);
+        Text text12 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 416, secondLineTextY);
+        Text text13 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 21, thirdLineTextY);
+        Text text14 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 100, thirdLineTextY);
+        Text text15 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 179, thirdLineTextY);
+        Text text16 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 258, thirdLineTextY);
+        Text text17 = setTextProperties("x0", Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 337, thirdLineTextY);
 
-        textComponents.add(text1);
-        textComponents.add(text2);
-        textComponents.add(text3);
-        textComponents.add(text4);
-        textComponents.add(text5);
-        textComponents.add(text6);
-        textComponents.add(text7);
-        textComponents.add(text8);
-        textComponents.add(text9);
-        textComponents.add(text10);
-        textComponents.add(text11);
-        textComponents.add(text12);
-        textComponents.add(text13);
-        textComponents.add(text14);
-        textComponents.add(text15);
-        textComponents.add(text16);
-        textComponents.add(text17);
+        textComponents = new ArrayList<>(Arrays.asList(text1, text2, text3, text4, text5, text6, text7, text8,
+                text9, text10, text11, text12, text13, text14, text15, text16, text17));
 
         button1.setOnMouseClicked(mouseEvent -> componentAmountInput(text1));
         button2.setOnMouseClicked(mouseEvent -> componentAmountInput(text2));
@@ -361,28 +343,23 @@ public class GUI extends Application {
     }
 
     private void someBadCode() {
-        int lineResources_Y = 419;
-        int scrap_amount = 0;
-        int metal_amount = 0;
-        int HQM_amount = 0;
-        int cloth_amount = 0;
-        int techparts_amount = 0;
-        int rope_amount = 0;
-        scrapText = setTextProperties("x" + scrap_amount, Font.font(FONT, 14.5), Color.WHITESMOKE, 21, lineResources_Y);
-        metalText = setTextProperties("x" + metal_amount, Font.font(FONT, 14.5), Color.WHITESMOKE, 100, lineResources_Y);
-        highQualityMetalText = setTextProperties("x" + HQM_amount, Font.font(FONT, 14.5), Color.WHITESMOKE, 179, lineResources_Y);
-        clothText = setTextProperties("x" + cloth_amount, Font.font(FONT, 14.5), Color.WHITESMOKE, 258, lineResources_Y);
-        techPartsText = setTextProperties("x" + techparts_amount, Font.font(FONT, 14.5), Color.WHITESMOKE, 337, lineResources_Y);
-        ropeText = setTextProperties("x" + rope_amount, Font.font(FONT, 14.5), Color.WHITESMOKE, 416, lineResources_Y);
+        int lineResourcesY = 419;
+        int scrapAmount = 0;
+        int metalAmount = 0;
+        int HQMAmount = 0;
+        int clothAmount = 0;
+        int techPartsAmount = 0;
+        int ropeAmount = 0;
+        scrapText = setTextProperties("x" + scrapAmount, Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 21, lineResourcesY);
+        metalText = setTextProperties("x" + metalAmount, Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 100, lineResourcesY);
+        highQualityMetalText = setTextProperties("x" + HQMAmount, Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 179, lineResourcesY);
+        clothText = setTextProperties("x" + clothAmount, Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 258, lineResourcesY);
+        techPartsText = setTextProperties("x" + techPartsAmount, Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 337, lineResourcesY);
+        ropeText = setTextProperties("x" + ropeAmount, Font.font(FONT_NAME, 14.5), Color.WHITESMOKE, 416, lineResourcesY);
 
-        textResources.add(scrapText);
-        textResources.add(metalText);
-        textResources.add(highQualityMetalText);
-        textResources.add(clothText);
-        textResources.add(techPartsText);
-        textResources.add(ropeText);
+        textResources = new ArrayList<>(Arrays.asList(scrapText, metalText, highQualityMetalText, clothText, techPartsText, ropeText));
 
-        globalPane.getChildren().addAll(scrapText, metalText, highQualityMetalText, clothText, techPartsText, ropeText);
+        globalPane.getChildren().addAll(textResources);
     }
 
 }
